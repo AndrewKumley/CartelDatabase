@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Cartel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="CartelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Cartel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CartelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Drugs" EntityType="Cartel.Drug" />
+          <EntitySet Name="Orders" EntityType="Cartel.Order" />
+          <EntitySet Name="Customers" EntityType="Cartel.Customer" />
+          <EntitySet Name="Dealers" EntityType="Cartel.Dealer" />
+          <EntitySet Name="Sales" EntityType="Cartel.Sale" />
+          <EntitySet Name="Scientists" EntityType="Cartel.Scientist" />
+          <EntitySet Name="Areas" EntityType="Cartel.Area" />
+          <EntitySet Name="CartelBosses" EntityType="Cartel.CartelBoss" />
+          <AssociationSet Name="DrugOrder" Association="Cartel.DrugOrder">
+            <End Role="Drug" EntitySet="Drugs" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerOrder" Association="Cartel.CustomerOrder">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="DealerOrder" Association="Cartel.DealerOrder">
+            <End Role="Dealer" EntitySet="Dealers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="DrugSale" Association="Cartel.DrugSale">
+            <End Role="Drug" EntitySet="Drugs" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerSale" Association="Cartel.CustomerSale">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="DealerSale" Association="Cartel.DealerSale">
+            <End Role="Dealer" EntitySet="Dealers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="DrugScientist" Association="Cartel.DrugScientist">
+            <End Role="Drug" EntitySet="Drugs" />
+            <End Role="Scientist" EntitySet="Scientists" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossArea" Association="Cartel.CartelBossArea">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossDealer" Association="Cartel.CartelBossDealer">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Dealer" EntitySet="Dealers" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossCustomer" Association="Cartel.CartelBossCustomer">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossSale" Association="Cartel.CartelBossSale">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossOrder" Association="Cartel.CartelBossOrder">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossDrug" Association="Cartel.CartelBossDrug">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Drug" EntitySet="Drugs" />
+          </AssociationSet>
+          <AssociationSet Name="CartelBossScientist" Association="Cartel.CartelBossScientist">
+            <End Role="CartelBoss" EntitySet="CartelBosses" />
+            <End Role="Scientist" EntitySet="Scientists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Drug">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Stock" Type="String" Nullable="false" />
+          <Property Name="Price" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Cartel.DrugOrder" FromRole="Drug" ToRole="Order" />
+          <NavigationProperty Name="Sales" Relationship="Cartel.DrugSale" FromRole="Drug" ToRole="Sale" />
+          <NavigationProperty Name="Scientists" Relationship="Cartel.DrugScientist" FromRole="Drug" ToRole="Scientist" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossDrug" FromRole="Drug" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="String" Nullable="false" />
+          <Property Name="Date" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Drug" Relationship="Cartel.DrugOrder" FromRole="Order" ToRole="Drug" />
+          <Property Name="DrugId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Cartel.CustomerOrder" FromRole="Order" ToRole="Customer" />
+          <Property Name="CustomerId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Dealer" Relationship="Cartel.DealerOrder" FromRole="Order" ToRole="Dealer" />
+          <Property Name="DealerId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossOrder" FromRole="Order" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Cartel.CustomerOrder" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Sales" Relationship="Cartel.CustomerSale" FromRole="Customer" ToRole="Sale" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossCustomer" FromRole="Customer" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="Dealer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Salary" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Cartel.DealerOrder" FromRole="Dealer" ToRole="Order" />
+          <NavigationProperty Name="Sales" Relationship="Cartel.DealerSale" FromRole="Dealer" ToRole="Sale" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossDealer" FromRole="Dealer" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="String" Nullable="false" />
+          <Property Name="Date" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Drug" Relationship="Cartel.DrugSale" FromRole="Sale" ToRole="Drug" />
+          <Property Name="DrugId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Cartel.CustomerSale" FromRole="Sale" ToRole="Customer" />
+          <Property Name="CustomerId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Dealer" Relationship="Cartel.DealerSale" FromRole="Sale" ToRole="Dealer" />
+          <Property Name="DealerId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossSale" FromRole="Sale" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="Scientist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Salary" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Drug" Relationship="Cartel.DrugScientist" FromRole="Scientist" ToRole="Drug" />
+          <Property Name="DrugId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossScientist" FromRole="Scientist" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" Nullable="false" />
+          <Property Name="CartelBossId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CartelBoss" Relationship="Cartel.CartelBossArea" FromRole="Area" ToRole="CartelBoss" />
+        </EntityType>
+        <EntityType Name="CartelBoss">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <NavigationProperty Name="Areas" Relationship="Cartel.CartelBossArea" FromRole="CartelBoss" ToRole="Area" />
+          <NavigationProperty Name="Dealers" Relationship="Cartel.CartelBossDealer" FromRole="CartelBoss" ToRole="Dealer" />
+          <NavigationProperty Name="Customers" Relationship="Cartel.CartelBossCustomer" FromRole="CartelBoss" ToRole="Customer" />
+          <NavigationProperty Name="Sales" Relationship="Cartel.CartelBossSale" FromRole="CartelBoss" ToRole="Sale" />
+          <NavigationProperty Name="Orders" Relationship="Cartel.CartelBossOrder" FromRole="CartelBoss" ToRole="Order" />
+          <NavigationProperty Name="Drugs" Relationship="Cartel.CartelBossDrug" FromRole="CartelBoss" ToRole="Drug" />
+          <NavigationProperty Name="Scientists" Relationship="Cartel.CartelBossScientist" FromRole="CartelBoss" ToRole="Scientist" />
+        </EntityType>
+        <Association Name="DrugOrder">
+          <End Type="Cartel.Drug" Role="Drug" Multiplicity="1" />
+          <End Type="Cartel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerOrder">
+          <End Type="Cartel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Cartel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DealerOrder">
+          <End Type="Cartel.Dealer" Role="Dealer" Multiplicity="1" />
+          <End Type="Cartel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dealer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DealerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DrugSale">
+          <End Type="Cartel.Drug" Role="Drug" Multiplicity="1" />
+          <End Type="Cartel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerSale">
+          <End Type="Cartel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Cartel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DealerSale">
+          <End Type="Cartel.Dealer" Role="Dealer" Multiplicity="1" />
+          <End Type="Cartel.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dealer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DealerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DrugScientist">
+          <End Type="Cartel.Drug" Role="Drug" Multiplicity="1" />
+          <End Type="Cartel.Scientist" Role="Scientist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Scientist">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CartelBossArea">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartelBoss">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="CartelBossId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CartelBossDealer">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Dealer" Role="Dealer" Multiplicity="*" />
+        </Association>
+        <Association Name="CartelBossCustomer">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Customer" Role="Customer" Multiplicity="*" />
+        </Association>
+        <Association Name="CartelBossSale">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Sale" Role="Sale" Multiplicity="*" />
+        </Association>
+        <Association Name="CartelBossOrder">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Order" Role="Order" Multiplicity="*" />
+        </Association>
+        <Association Name="CartelBossDrug">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Drug" Role="Drug" Multiplicity="*" />
+        </Association>
+        <Association Name="CartelBossScientist">
+          <End Type="Cartel.CartelBoss" Role="CartelBoss" Multiplicity="1" />
+          <End Type="Cartel.Scientist" Role="Scientist" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Cartel" />
+        <Alias Key="Target" Value="Cartel.Store" />
+        <EntityContainerMapping CdmEntityContainer="CartelContainer" StorageEntityContainer="CartelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
